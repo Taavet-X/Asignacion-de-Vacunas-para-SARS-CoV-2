@@ -1,6 +1,6 @@
 Region  Poblacion   Congeladores    UnidadesVacunacion  CostoAdecuacion Muertes Cualificacion KitsBioseguridad
 Norte   50  2   2   80  550 0   1
-Sur 25  3   1   100 350 4   2   1
+Sur 25  3   1   100 350 4   2
 Centro  90  4   1   70  2600    0   1
 Centro-Norte 40 2   3   110 1000    0   1
 Oeste   35  3   4   95  300 2   1
