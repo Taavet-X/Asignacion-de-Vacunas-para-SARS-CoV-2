@@ -52,10 +52,10 @@ def load_restric(ruta: str):
 # Calcula el beneficio y dar la variable
 def beneficio(regiones: list):
     def muertes(e: Region):
-        return int(e.muertes)
+        return e.muertes
 
     def congeladores(e: Region):
-        return int(e.congeladores)
+        return e.congeladores
 
     regiones.sort(key=muertes)
     regiones.sort(key=congeladores)
