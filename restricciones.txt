@@ -1,0 +1,5 @@
+kits_vacunacion:2500000
+unidades_vacunacion:300
+presupuesto_instalaciones:3500
+cualificacion:1000
+dosis_minima:10000

@@ -12,23 +12,60 @@ DOSIS = "dosis_minima"
 # Cargar información desde un archivo de texto
 # Retorna una lista de objetos de tipo Region resultado de la información cargada
 def load_info(ruta: str):
-    pass
+    file = open(ruta, "r")
+    regiones = []
+
+    info = file.read().split("\n")
+    file.close()
+
+    for i in range(len(info)):
+        line = info[i].split(",")
+        if i > 0:
+            region = Region(line[0],
+                            int(line[1]),
+                            int(line[2]),
+                            int(line[3]),
+                            int(line[4]),
+                            int(line[5]),
+                            int(line[6]),
+                            int(line[7]))
+            regiones.append(region)
+    beneficio(regiones)
+    return regiones
 
 
 # Cargar informacion de restricciones
 def load_restric(ruta: str):
-    pass
+    file = open(ruta, "r")
+    restricciones = {}
+
+    info = file.read().split("\n")
+    file.close()
+
+    for line in info:
+        restrict = line.split(":")
+        restricciones[restrict[0]] = restrict[1]
+
+    return restricciones
 
 
 # Calcula el beneficio y dar la variable
 def beneficio(regiones: list):
-    # def myFunc(e):
-    #   return len(e)
+    def muertes(e: Region):
+        return int(e.muertes)
 
-    # cars = ['Ford', 'Mitsubishi', 'BMW', 'VW']
+    def congeladores(e: Region):
+        return int(e.congeladores)
 
-    # cars.sort(key=myFunc)
-    pass
+    regiones.sort(key=muertes)
+    regiones.sort(key=congeladores)
+    i = 1
+
+    for region in regiones:
+        region.beneficio = i
+        region.variable = f"x{i}"
+        i += 1
+        print(region.nombre)
 
 
 # CRISTHIAN GARCIA
@@ -78,45 +115,12 @@ def generate_model(regiones: list, restricciones: dict):
 
 def get_model(ruta_info, ruta_restricciones):
     # Para pruebas
-    regiones, restricciones = get_default_model()
+    # regiones, restricciones = get_default_model()
 
     # Código que debería quedar
-    # regiones = load_info(ruta_info)
-    # restricciones = load_restric(ruta_restricciones)
+    regiones = load_info(ruta_info)
+    restricciones = load_restric(ruta_restricciones)
     return regiones, generate_model(regiones, restricciones)
-
-
-# PRUEBAS
-# Retorna una lista de regiones con la información por defecto del problema.
-def get_default_model():
-    region1 = Region("Este", 22, 2, 2, 90, 250, 0, 1)
-    region2 = Region("Norte", 50, 2, 2, 80, 550, 0, 1)
-    region3 = Region("Centro-Norte", 40, 2, 3, 110, 1000, 0, 1)
-    region4 = Region("Oeste", 35, 3, 4, 95, 300, 2, 1)
-    region5 = Region("Sur", 25, 3, 1, 100, 350, 4, 2)
-    region6 = Region("Centro", 90, 4, 1, 70, 2600, 0, 1)
-    region7 = Region("Noreste", 30, 5, 3, 120, 300, 3, 2)
-
-    region1.variable = "x1"
-    region2.variable = "x2"
-    region3.variable = "x3"
-    region4.variable = "x4"
-    region5.variable = "x5"
-    region6.variable = "x6"
-    region7.variable = "x7"
-
-    region1.beneficio = 1
-    region2.beneficio = 2
-    region3.beneficio = 3
-    region4.beneficio = 4
-    region5.beneficio = 5
-    region6.beneficio = 6
-    region7.beneficio = 7
-
-    regiones = [region1, region2, region3, region4, region5, region6, region7]
-    restricciones = {KITS: 2500000, VACUNACION: 300, PRESUPUESTO: 3500, CUALIFICACION: 1000, DOSIS: 10000}
-
-    return regiones, restricciones
 
 
 def init_solver(ruta_info="info.txt", ruta_restricciones="restricciones.txt"):
@@ -143,5 +147,4 @@ def get_solution(result, regiones):
         # (region.variable, "=", result[region.variable])
     return ans
 
-
-init_solver()
+# init_solver()
