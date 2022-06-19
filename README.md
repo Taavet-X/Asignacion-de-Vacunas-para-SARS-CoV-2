@@ -2,6 +2,8 @@
 
 <h2>Proyecto final Complejidad y Optimización</h2>
 
+![image](https://user-images.githubusercontent.com/77510617/174464968-eb9bfa71-96c6-4f15-83d0-8ad12ed18355.png)
+
 
 Cristhian Andres Garcia - 17655571 <br>
 German David Estrada - 2013122 <br>
