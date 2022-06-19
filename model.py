@@ -65,7 +65,7 @@ def beneficio(regiones: list):
         region.beneficio = i
         region.variable = f"x{i}"
         i += 1
-        print(region.nombre)
+        #print(region.nombre)
 
 
 # CRISTHIAN GARCIA
@@ -124,7 +124,7 @@ def get_model(ruta_info, ruta_restricciones):
 
 
 def init_solver(ruta_info="info.txt", ruta_restricciones="restricciones.txt"):
-    gecode = Solver.lookup("coin-bc")
+    gecode = Solver.lookup("coin-bc")    
 
     regiones, modelo = get_model(ruta_info, ruta_restricciones)
 
@@ -135,7 +135,7 @@ def init_solver(ruta_info="info.txt", ruta_restricciones="restricciones.txt"):
 
     # Encontrar todas las soluciones
     result = instance.solve(intermediate_solutions=False)
-    print(get_solution(result, regiones))
+    #print(get_solution(result, regiones))
 
 
 def get_solution(result, regiones):
@@ -143,8 +143,26 @@ def get_solution(result, regiones):
     ans += f"Z = {result.solution.objective}\n"
 
     for region in regiones:
-        ans += f"{region.variable} = {result[region.variable]}\n"
+        ans += f"{region.nombre} = {result[region.variable]}\n"
         # (region.variable, "=", result[region.variable])
     return ans
+
+def init_solver2(regiones, restricciones):
+    gecode = Solver.lookup("coin-bc")
+    #gecode = Solver.lookup("gecode")
+
+    modelo = generate_model(regiones, restricciones)
+    print(modelo)
+
+    trivial = Model()
+    trivial.add_string(modelo)
+
+    instance = Instance(gecode, trivial)
+
+    # Encontrar todas las soluciones
+    result = instance.solve(intermediate_solutions=False)
+    r = get_solution(result, regiones)
+    #print(r)
+    return r
 
 # init_solver()
